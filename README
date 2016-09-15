@@ -1,0 +1,47 @@
+HMDA project - Capital One
+
+Written in Python3.5
+by Ben Wilson
+
+The entire program is contained within the python file entitled 'Main.py'
+
+Command Line supported use is achieved with the following arguments:
+    -i Input location of the zip file directory of the raw data
+    -o Output location desired for saving json files and charts(if desired)
+    -s State listing to restrict the json file production (optional, defaults to All States)
+    -f Conventional_Conforming loan filter (defaults to False (no filtering))
+    -p Plotting boolean (True = plot charts, False = no charting)
+
+Example Usage at the command prompt:
+    >python Main.py -i C:/Cap1_DC -o C:/Cap1_Output -s 'VA', 'WV', 'DE' -f True -p True
+
+Output locations:
+    - The JSON files will be produced within per-state folders located in subdirectories beneath the
+    supplied output directory by the -o argument.  Each file will be located in these folders.
+    - The overall Market share json data will be located in the Market_Share directory in the output
+    directory folder.
+    - Plots will be placed into 3 separate directories (County_Plots, Top_Lenders, and Total_Market).
+        - County Plots will be organized by state and will produce a distribution plot of applicant income
+        from within the county.
+        - Top Lenders plot will show the top 10 lenders for the most recent year and their lending history
+        within each state.
+        - Total Market will show the number of issued loans by state over time (General trend)
+
+Source file concerns:
+    - For a production-ready application, a number of complex rules would need to be developed that would
+    provide sanitized and standardized results from the Respondent_Name_TS, as well as a possible
+    spell check verifier through a module such as PyEnchant (passing a tokenized list of all words
+    in the Respondent_Name_TS field through a customized dictionary that has been curated for financial
+    abbreviations and returning most likely match for each word, then updating the field - although this
+    would involve creating a rather large dictionary which I did not have time to do).
+    - For a true application of this data, one of the most useful aspects would be to acquire the results
+    of all applications (i.e. was the application approved?  What standing is it in?), as well as information
+    regarding demographics of the applicants apart from their income.  What is their credit score,
+    how much debt do they have, and what is their history regarding payments?  With this information,
+    a robust prediction algorithm could be developed that would assess the risk for a particular market,
+    as well as being a feed-in to a decision algorithm for determining future potential clients in a region.
+    - Reference tables should be established if, as the problem statement said, data changes over time
+    from the agencies that report this data.  County_Code, Census_Tract_Number, MSA_MD, Respondent_ID, and
+    State_Code should all be considered immutable and be referenced by internal curating, rather than
+    relying on reporting agencies to 'get it right', in order to have accurate summary statistics that can
+    be used to draw conclusions and decisions from.
